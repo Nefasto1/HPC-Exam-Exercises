@@ -1,16 +1,34 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
-df = pd.read_csv("prova.txt", sep="\t")
+# Open the dataframes
+df_mpi       = pd.read_csv(f"results/prova_MPI.txt", sep="\t")
+df_true      = pd.read_csv(f"results/prova_MPI_true.txt", sep="\t")
+df_open      = pd.read_csv(f"results/prova_OpenMP.txt", sep="\t")
 
-for n in df["Size"].unique():
-    idxs = (df["Size"] == n).values
-    plt.plot(df[idxs]["np"], df[idxs]["Latency (ns)"], label=n)
+# Plot the Algorithms' Latency in function of the number of processors
+for n in df_open["Size"].unique():
+    # Take the row where the number of processors is equal to n
+    tmp_mpi       = df_mpi[df_mpi["np"] == n]
+    tmp_true      = df_true[df_true["np"] == n]
+    tmp_open      = df_open[df_open["np"] == n]
     
-plt.xlabel("# Threads")
-plt.ylabel("Latency (ns)")
-plt.legend()
-plt.grid()
-plt.xticks([2**i for i in range(int(np.log2(128*4)))])
-plt.savefig("prova.png")
+    # Plot the curves
+    plt.cla()
+    plt.plot(tmp_mpi ["Size"].unique(), tmp_mpi["Latency (ns)"], label="MPI")
+    plt.plot(tmp_true["Size"].unique(), tmp_true["Latency (ns)"], label="MPI_true")
+    plt.plot(tmp_open["Size"].unique(), tmp_open["Latency (ns)"], label="OpenMP")
+
+    # Set the plot's informations
+    plt.title(f"Size:{n}")  
+    plt.xlabel("np")
+    plt.ylabel("Latency (ns)")
+    
+    # Set additional informations
+    plt.xticks(tmp_open["np"].unique())
+    plt.grid()
+    plt.legend()
+    
+    # Save the plots
+    plt.savefig(f"plots/Size:{n}.png")
