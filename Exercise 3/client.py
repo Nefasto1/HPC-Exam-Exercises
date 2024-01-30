@@ -1,5 +1,5 @@
-from login import login
-from signup import sign_up
+from src.login import login
+from src.signup import sign_up
 
 import os
 
