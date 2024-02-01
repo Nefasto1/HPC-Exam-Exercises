@@ -15,3 +15,7 @@ fi
 ./mc alias set server_name http://127.0.0.1:9000/ minioadmin minioadmin
 ./mc admin user add server_name admin adminadmin
 ./mc admin policy attach server_name consoleAdmin --user admin
+
+# Console info
+clear
+echo -e "Storage server is up, you can access it using the url: \n\t\e]8;;127.0.0.1:9001\a127.0.0.1:9001\e]8;;\a or \e]8;;172.17.0.2:9001\a172.17.0.2:9001\e]8;;\a"

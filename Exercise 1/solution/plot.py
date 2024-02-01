@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 for name in ["thin", "fixed_thin"]: #"fixed_epyc"]:
-
     df = pd.read_csv(f"results/results_{name}_merged.txt", sep="\t")
 
     for type in ["broadcast", "scatter"]:

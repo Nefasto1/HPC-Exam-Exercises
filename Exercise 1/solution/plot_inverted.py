@@ -42,7 +42,7 @@ for name in ["thin"]:#, "fixed_thin"]: #"fixed_epyc"]:
             # plt.xlabel("# Cores")
             plt.xlabel("Size")
             plt.ylabel("Latency (us)")
-            plt.savefig(f"plots2/{name} - {type} - np={n}.png")
+            plt.savefig(f"plots_inverted/{name} - {type} - np={n}.png")
             plt.close()
 
 # df = pd.read_csv(f"results_epyc_merged.txt", sep="\t")
