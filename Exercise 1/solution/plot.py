@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-for name in ["epyc", "thin", "fixed_thin"]: #"fixed_epyc"]:
+for name in ["thin", "fixed_thin"]: #"fixed_epyc"]:
 
     df = pd.read_csv(f"results/results_{name}_merged.txt", sep="\t")
 
@@ -17,7 +17,7 @@ for name in ["epyc", "thin", "fixed_thin"]: #"fixed_epyc"]:
                     algvect = (df["Algorithm"] == alg).values
                     idxs    = [n and alg for n, alg in zip(npvect, algvect)]
 
-                    nps = df[idxs]["np"].unique()
+                    nps = np.sort(df[idxs]["np"].unique())
                     vals = [df[idxs][df["np"] == i]["Latency (us)"].values for i in nps]
                     means = df[idxs].groupby("np")["Latency (us)"].mean().values
                     stds = df[idxs].groupby("np")["Latency (us)"].std().values
@@ -28,14 +28,20 @@ for name in ["epyc", "thin", "fixed_thin"]: #"fixed_epyc"]:
                     ax.fill_between(nps, means - stds, means + stds, alpha=0.2)
                     # plt.plot(df[idxs]["np"], df[idxs]["Latency (us)"], label=alg)
                 
-            if name == "epyc": 
-                half = 128
-                plt.xticks([2**i for i in range(int(np.log2(half*4)))])
-            else:
-                half = 12
-                plt.xticks([3*2**i for i in range(4)])
+            # if name == "epyc": 
+            #     half = 128
+            #     plt.xticks([2**i for i in range(int(np.log2(half*4)))])
+            # else:
+            # half = 24
+            # plt.xticks([3*2**i for i in range(5)])
                 
-            plt.axvline(x=half, color='red')    
+            plt.xlim((0, 49))
+            plt.xticks(list(range(0, 49, 10)) + [12, 24, 36])
+                
+            plt.axvline(x=12, color='gray')    
+            plt.axvline(x=24, color='gray')    
+            plt.axvline(x=36, color='gray')  
+            
             plt.title(f"Size={n}")
             plt.legend()
             plt.grid()

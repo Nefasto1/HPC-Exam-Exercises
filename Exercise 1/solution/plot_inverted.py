@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-for name in ["epyc", "thin"]:#, "fixed_thin"]: #"fixed_epyc"]:
+for name in ["thin"]:#, "fixed_thin"]: #"fixed_epyc"]:
 
     df = pd.read_csv(f"results/results_{name}_merged.txt", sep="\t")
 
