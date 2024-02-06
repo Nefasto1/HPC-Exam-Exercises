@@ -1,0 +1,55 @@
+
+j=$1
+while [ $j -le 10 ]
+do
+echo "Iteration $j"
+result=~/exam/results/fixed_thin_$j.txt
+echo "" | sed "1i\Size\tLatency (us)\tnp\tAlgorithm" > $result
+
+i=2
+while [ $i -le 48 ]
+do
+echo "$i/48" 
+# Broadcast
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_bcast_algorithm 1 osu_bcast -x 1000 -m 1 \
+       | tail -n 1 > ~/exam/results/broadcast_flat.txt
+
+f=~/exam/results/broadcast_flat.txt
+sed "s/$/\t$i\tbroadcast_flat/" "$f" >> $result
+
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_bcast_algorithm 2 osu_bcast -x 1000 -m 1 \
+       | tail -n 1 > ~/exam/results/broadcast_chain.txt
+
+f=~/exam/results/broadcast_chain.txt
+sed "s/$/\t$i\tbroadcast_chain/" "$f" >> $result
+
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_bcast_algorithm 5 osu_bcast -x 1000 -m 1 \
+       | tail -n 1 > ~/exam/results/broadcast_binary.txt
+
+f=~/exam/results/broadcast_binary.txt
+sed "s/$/\t$i\tbroadcast_binary_tree/" "$f" >> $result
+
+# Scatter
+
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_scatter_algorithm 1 osu_scatter -x 1000 -m 1 \
+       | tail -n 1 > ~/exam/results/scatter_flat.txt
+
+f=~/exam/results/scatter_flat.txt
+sed "s/$/\t$i\tscatter_flat/" "$f" >> $result
+
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_scatter_algorithm 2 osu_scatter -x 1000 -m 1 \
+       | tail -n 1 > ~/exam/results/scatter_binomial.txt
+
+f=~/exam/results/scatter_binomial.txt
+sed "s/$/\t$i\tscatter_basic_binomial/" "$f" >> $result
+
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_scatter_algorithm 3 osu_scatter -x 1000 -m 1 \
+       | tail -n 1 > ~/exam/results/scatter_nb.txt
+
+f=~/exam/results/scatter_nb.txt
+sed "s/$/\t$i\tscatter_nb/" "$f" >> $result
+
+i=$(($i + 1))
+done
+j=$(($j + 1))
+done
