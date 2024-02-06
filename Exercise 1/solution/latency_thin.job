@@ -1,0 +1,47 @@
+#!/bin/bash
+
+#SBATCH --job-name=HPC
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=24
+#SBATCH --ntasks-per-socket=12
+#SBATCH --ntasks-per-core=1
+#SBATCH --exclusive
+#SBATCH --time=0-02:00:00
+#SBATCH --exclude=fat00[1-2]
+
+#SBATCH -p THIN
+
+#SBATCH --output=%x.%j.out 
+#SBATCH --error=%x.%j.err
+
+#SBATCH --mail-user=stefano21082001@gmail.com
+
+cd osu-micro-benchmarks-7.3/c/mpi/collective/blocking/
+module load openMPI/4.1.5/icc
+module load openMPI/4.1.5/icx
+
+mpirun -np 2 --map-by core osu_latency > ~/exam/results/latency_different_core_thin.txt
+
+for i in {1..9}
+do
+mpirun -np 2 --map-by core osu_latency | tail -n 23 \
+       >> ~/exam/results/latency_different_core_thin.txt
+done
+
+mpirun -np 2 --map-by socket osu_latency \
+       > ~/exam/results/latency_different_socket_thin.txt
+
+for i in {1..9}
+do
+mpirun -np 2 --map-by socket osu_latency | tail -n 23 \
+       >> ~/exam/results/latency_different_socket_thin.txt
+done
+
+mpirun -np 2 --map-by node osu_latency \
+       > ~/exam/results/latency_different_node_thin.txt
+
+for i in {1..9}
+do
+mpirun -np 2 --map-by node osu_latency | tail -n 23 \
+       >> ~/exam/results/latency_different_node_thin.txt
+done
