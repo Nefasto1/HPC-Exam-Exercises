@@ -67,7 +67,7 @@ def update_user(server_name: str, username:str):
     if len(user_idx) > 0:      
         # Check the current policy
         current_policy = users_list[user_idx, 1][0]         
-        new_policy     = "readwrite" if users_list[user_idx, 1] == "consoleAdmin" else "consoleAdmin"
+        new_policy     = "regular" if users_list[user_idx, 1] == "consoleAdmin" else "consoleAdmin"
             
         # Remove the previous policy and add the new one
         cmd_attach = f"./mc admin policy attach {server_name} {new_policy} --user {user}".split()

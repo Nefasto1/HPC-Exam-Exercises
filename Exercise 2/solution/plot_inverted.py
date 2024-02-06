@@ -15,34 +15,19 @@ for n in df_open["np"].unique():
     
     # Plot the curves
     plt.cla()
-    plt.plot(tmp_mpi ["Size"].unique(), tmp_mpi["Latency (ns)"], label="MPI")
-    plt.plot(tmp_open["Size"].unique(), tmp_open["Latency (ns)"], label="OpenMP")
+    plt.plot(np.log2(tmp_mpi ["Size"].unique()), tmp_mpi["Latency (ns)"]/1000, label="MPI")
+    plt.plot(np.log2(tmp_open["Size"].unique()), tmp_open["Latency (ns)"]/1000, label="OpenMP")
+    plt.plot(np.log2(df_seri["Size"].unique()), df_seri["Latency (ns)"]/1000, label="Serial")
 
     # Set the plot's informations
     plt.title(f"np:{n}")  
-    plt.xlabel("Size")
-    plt.ylabel("Latency (ns)")
+    plt.xlabel("log Size")
+    plt.ylabel("Time (us)")
     
     # Set additional informations
-    plt.xticks(tmp_open["Size"].unique())
+    plt.xticks(np.log2(tmp_open["Size"].unique()))
     plt.grid()
     plt.legend()
     
     # Save the plots
-    plt.savefig(f"plots/np:{n}.png")
-    
-    plt.cla()
-    plt.plot(df_seri["Size"].unique()[:-1], df_seri["Latency (ns)"][:-1], label="Serial")
-    plt.plot(tmp_open["Size"].unique(), tmp_open["Latency (ns)"], label="OpenMP")
-
-    # Set the plot's informations
-    plt.title(f"Size:{n}")  
-    plt.xlabel("Size")
-    plt.ylabel("Latency (ns)")
-    
-    # Set additional informations
-    plt.xticks(tmp_open["Size"].unique())
-    plt.grid()
-    plt.legend()
-    
-    plt.savefig(f"plots/2 np:{n}.png")
+    plt.savefig(f"inverted_plots/np:{n}.png")

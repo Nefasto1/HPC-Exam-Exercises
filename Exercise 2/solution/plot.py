@@ -15,13 +15,13 @@ for n in df_open["Size"].unique():
     
     # Plot the curves
     plt.cla()
-    plt.plot(tmp_mpi ["np"].unique(), tmp_mpi["Latency (ns)"], label="MPI")
-    plt.plot(tmp_open["np"].unique(), tmp_open["Latency (ns)"], label="OpenMP")
+    plt.plot(tmp_mpi ["np"].unique(), tmp_mpi["Latency (ns)"]/1000, label="MPI")
+    plt.plot(tmp_open["np"].unique(), tmp_open["Latency (ns)"]/1000, label="OpenMP")
 
     # Set the plot's informations
     plt.title(f"Size:{n}")  
     plt.xlabel("np")
-    plt.ylabel("Latency (ns)")
+    plt.ylabel("Time (us)")
     
     # Set additional informations
     plt.xticks(tmp_open["np"].unique())

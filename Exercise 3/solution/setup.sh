@@ -15,6 +15,7 @@ fi
 ./mc alias set server_name http://127.0.0.1:9000/ minioadmin minioadmin
 ./mc admin user add server_name admin adminadmin
 ./mc admin policy attach server_name consoleAdmin --user admin
+./mc admin policy create server_name regular src/regular.json
 
 # Console info
 clear

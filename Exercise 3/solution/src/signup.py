@@ -45,7 +45,7 @@ def sign_up(is_admin: bool = False):
     admin = input("\tIs an Admin? [Y/n]: ") if is_admin else "n"
     
     # Assign the policy consistently with the choice
-    policy = "consoleAdmin" if admin in ["Y", "y"] else "readwrite"
+    policy = "consoleAdmin" if admin in ["Y", "y"] else "regular"
     
     # Create the user and assign the policy to him
     cmd_add = f"./mc admin user add {server_name} {access} {secret}".split()

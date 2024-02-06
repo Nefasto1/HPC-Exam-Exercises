@@ -144,53 +144,7 @@ def regular(client, bucket_name):
         elif operation == "5":
             print("Have a nice day!!")
             break
-        
-        elif operation == "6":
-            prova = []
-            n = input("ciao:")
-            s = input("s:")
-            s = s == ""
-            for i in range(20):
-                print(i+1, "/20")
-                start = time()
-                stress(client, bucket_name, s, n)
-                end = time()
-                prova.append(end-start)    
-                
-            print(np.mean(prova))
                 
         # If the regular command doesn't exist
         else: 
             print("Not valid")
-
-      
-def stress(client: Minio, bucket_name: str, load=True, n=1):
-    """
-    Function which upload the user's file into the bucket
-    kes key create my-minio-sse-kms-key
-    Parameters
-    ----------
-    client: Minio-obj
-        Client from where obtain the user's informations
-    bucket_name: str
-        Name of the user's bucket
-    """
-
-    # Define the elements to upload
-    destination_file = f"stress{n}.zip"
-    source_file      = f"stress{n}.zip"
-    
-    if load:
-        # Insert them in the user's bucket
-        client.fput_object(
-            bucket_name, 
-            destination_file, 
-            source_file,
-        )
-    else:
-        # Download it
-        client.fget_object(
-            bucket_name, 
-            destination_file, 
-            source_file,
-        )
