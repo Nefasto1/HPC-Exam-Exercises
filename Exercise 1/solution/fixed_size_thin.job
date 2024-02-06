@@ -1,3 +1,6 @@
+cd osu-micro-benchmarks-7.3/c/mpi/collective/blocking/
+module load openMPI/4.1.5/icc
+module load openMPI/4.1.5/icx
 
 j=$1
 while [ $j -le 10 ]
