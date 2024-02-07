@@ -20,28 +20,28 @@ cd osu-micro-benchmarks-7.3/c/mpi/collective/blocking/
 module load openMPI/4.1.5/icc
 module load openMPI/4.1.5/icx
 
-mpirun -np 2 --map-by core osu_latency > ~/exam/results/latency_different_core_thin.txt
+mpirun -np 2 --map-by core osu_latency > ./results/latency_different_core_thin.txt
 
 for i in {1..9}
 do
 mpirun -np 2 --map-by core osu_latency | tail -n 23 \
-       >> ~/exam/results/latency_different_core_thin.txt
+       >> ./results/latency_different_core_thin.txt
 done
 
 mpirun -np 2 --map-by socket osu_latency \
-       > ~/exam/results/latency_different_socket_thin.txt
+       > ./results/latency_different_socket_thin.txt
 
 for i in {1..9}
 do
 mpirun -np 2 --map-by socket osu_latency | tail -n 23 \
-       >> ~/exam/results/latency_different_socket_thin.txt
+       >> ./results/latency_different_socket_thin.txt
 done
 
 mpirun -np 2 --map-by node osu_latency \
-       > ~/exam/results/latency_different_node_thin.txt
+       > ./results/latency_different_node_thin.txt
 
 for i in {1..9}
 do
 mpirun -np 2 --map-by node osu_latency | tail -n 23 \
-       >> ~/exam/results/latency_different_node_thin.txt
+       >> ./results/latency_different_node_thin.txt
 done
