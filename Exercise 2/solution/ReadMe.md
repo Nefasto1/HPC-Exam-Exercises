@@ -25,8 +25,18 @@ where:
 
 To run this code use the commands:
 
-```mpirun -np <num> quicksort.o [size]```
+```mpirun -np <num> quicksort_openmp.o [size]```
 
 where:
   - `<num>` is the number of processes with which run the code
   - `[size]` is the number of double in the array to sort (default 10000000)
+
+To get the algorithms times we can run the slurm jobs with the commands:
+
+```sbatch <.job file> <MaxProcs> <MaxNumInt> <Iteration>```
+
+where:
+  - `<.job file>` is one of in the repository
+  - `<MaxProcs>` is the number of processes/threads to use
+  - `<MaxNumInt>` is the number of integer (or double for quicksort) in the array used
+  - `<Iteration>` is the number of iteration to execute
