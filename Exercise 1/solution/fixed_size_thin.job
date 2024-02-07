@@ -21,8 +21,6 @@ module load openMPI/4.1.5/icc
 module load openMPI/4.1.5/icx
 
 j=$1
-while [ $j -le 10 ]
-do
 echo "Iteration $j"
 result=~/exam/results/fixed_thin_$j.txt
 echo "" | sed "1i\Size\tLatency (us)\tnp\tAlgorithm" > $result
@@ -71,6 +69,4 @@ f=~/exam/results/scatter_nb.txt
 sed "s/$/\t$i\tscatter_nb/" "$f" >> $result
 
 i=$(($i + 1))
-done
-j=$(($j + 1))
 done
