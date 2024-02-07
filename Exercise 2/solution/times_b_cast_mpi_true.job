@@ -1,0 +1,49 @@
+#!/bin/bash
+
+#SBATCH --job-name=HPC
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=24
+#SBATCH --ntasks-per-socket=12
+#SBATCH --ntasks-per-core=1
+#SBATCH --exclusive
+#SBATCH --time=0-00:30:00
+#SBATCH --exclude=fat00[1-2]
+
+#SBATCH -p THIN
+
+#SBATCH --output=%x.%j.out 
+#SBATCH --error=%x.%j.err
+
+#SBATCH --mail-user=stefano21082001@gmail.com
+
+if [ $# -lt 3 ]
+then
+	echo "Usage: ./MPI.sh Maxprocs MaxNumInt Iteration"
+else
+module load openMPI/4.1.5/icc
+result=./results/b_cast_mpi_true.txt
+echo "" | sed "1i\Size\tLatency (ns)\tnp" > $result
+
+k=2
+while [ $k -le $1 ]
+do
+	j=1
+	while [ $j -le $2 ] 
+	do
+		export mean=0
+		for i in {1..$3}
+		do
+			export init_time=$(date +%s%N)
+
+			mpirun -np $k -quiet MPI_true.o $j
+
+			export finish_time=$(date +%s%N)
+			mean=$(($mean+($finish_time - $init_time)))
+		done
+		mean=$(( $mean/$3 ))
+		echo "" | sed "1i\\$j\t$mean\t$k" >> $result
+		j=$(($j * 2))
+	done
+k=$(($k + 1))
+done
+fi
