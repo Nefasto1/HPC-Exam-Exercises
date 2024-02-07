@@ -40,3 +40,5 @@ where:
   - `<MaxProcs>` is the number of processes/threads to use
   - `<MaxNumInt>` is the number of integer (or double for quicksort) in the array used
   - `<Iteration>` is the number of iteration to execute
+
+Then you can plot this results with running the python code.
