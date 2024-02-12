@@ -1,3 +1,5 @@
+# Exercise 3
+
 To create the MinIO container and set the default admin access run:
 
 ```./setup.sh```
