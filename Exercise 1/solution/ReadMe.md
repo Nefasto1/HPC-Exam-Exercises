@@ -1,3 +1,5 @@
+# Exercise 1
+
 To launch the commands to obtain the times in slurm use the command:
 
 ```sbatch <.job file> <num>```
