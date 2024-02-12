@@ -1,3 +1,5 @@
+# Exercise 2
+
 To compile the codes we used the icc compiler or use the command:
 
 ```./compile_all.sh```
