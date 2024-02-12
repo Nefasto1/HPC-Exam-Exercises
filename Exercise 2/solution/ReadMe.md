@@ -1,4 +1,6 @@
-To compile the codes we used the icc compiler.
+To compile the codes we used the icc compiler or use the command:
+
+```./compile_all.sh```
 
 # Exercise 2a
 To create the binary files for the .c files execute the commands:
