@@ -29,9 +29,12 @@ where:
 
 To run this code use the commands:
 
+```export OMP_NUM_THREADS=<n_threads>```
+
 ```mpirun -np <num> quicksort_openmp.o [size]```
 
 where:
+  - `<n_threads>` is the number of threads with which run the code
   - `<num>` is the number of processes with which run the code
   - `[size]` is the number of double in the array to sort (default 10000000)
 
