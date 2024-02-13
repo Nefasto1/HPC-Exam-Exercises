@@ -28,8 +28,6 @@ int main(int argc, char** argv) {
             }
         }
     }
-    // Wait for the master to finish
-    #pragma omp barrier
 
     // Broadcast the buffer between the threads
     #pragma omp parallel copyin(buffer)
