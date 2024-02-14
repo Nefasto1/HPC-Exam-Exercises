@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Open the dataframes
-df_mpi       = pd.read_csv(f"results/quicksort_MPI.txt", sep="\t")
-df_open      = pd.read_csv(f"results/quicksort_openmp.txt", sep="\t")
-df_seri      = pd.read_csv(f"results/quicksort_serial.txt", sep="\t")
+df_mpi  = pd.read_csv(f"results/quicksort_MPI.txt", sep="\t")
+df_open = pd.read_csv(f"results/quicksort_openmp.txt", sep="\t")
+df_seri = pd.read_csv(f"results/quicksort_serial.txt", sep="\t")
 
 # Plot the Algorithms' Latency in function of the number of processors
 for n in df_open["np"].unique():
