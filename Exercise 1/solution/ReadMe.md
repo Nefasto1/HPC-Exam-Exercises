@@ -2,10 +2,11 @@
 
 To launch the commands to obtain the times in slurm use the command:
 
-```sbatch <.job file> <num>```
+```sbatch get_latency.job <num>```
+```sbatch fixed_size_thin.job <num>```
+```sbatch p2p_latency.job <num>```
 
 where:
-  - `<.job file>` is equal to "get_latency.job", "fixed_size_thin.job" or "p2p_latency.job"
   - `<num>` is the number of the iteration to execute, it is mandatory only for "code_thin.job" and "fixed_size_thin.job"
 
 To preprocess the data launch the `preprocess.py` code using the command:
