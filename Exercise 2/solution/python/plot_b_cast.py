@@ -3,20 +3,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Open the dataframes
-df_true      = pd.read_csv(f"results/True.txt", sep="\t")
-df_open      = pd.read_csv(f"results/b_cast_openmp.txt", sep="\t")
-df_flat      = pd.read_csv(f"results/flat.txt", sep="\t")
-df_chain     = pd.read_csv(f"results/chain.txt", sep="\t")
-df_binary    = pd.read_csv(f"results/binary.txt", sep="\t")
+df_true   = pd.read_csv(f"results/True.txt", sep="\t")
+df_open   = pd.read_csv(f"results/b_cast_openmp.txt", sep="\t")
+df_flat   = pd.read_csv(f"results/flat.txt", sep="\t")
+df_chain  = pd.read_csv(f"results/chain.txt", sep="\t")
+df_binary = pd.read_csv(f"results/binary.txt", sep="\t")
 
 # Plot the Algorithms' Latency in function of the number of processors
 for n in df_open["Size"].unique():
     # Take the row where the number of processors is equal to n
-    tmp_true      = df_true[df_true["Size"] == n]
-    tmp_open      = df_open[df_open["Size"] == n]
-    tmp_flat      = df_flat[df_flat["Size"] == n]
-    tmp_chain     = df_chain[df_chain["Size"] == n]
-    tmp_binary    = df_binary[df_binary["Size"] == n]
+    tmp_true   = df_true[df_true["Size"] == n]
+    tmp_open   = df_open[df_open["Size"] == n]
+    tmp_flat   = df_flat[df_flat["Size"] == n]
+    tmp_chain  = df_chain[df_chain["Size"] == n]
+    tmp_binary = df_binary[df_binary["Size"] == n]
     
     # Plot the curves
     plt.cla()
