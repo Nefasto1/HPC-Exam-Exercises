@@ -8,8 +8,11 @@ To compile the codes we used the gnu or the icc compiler, or use the command:
 To run these codes use the commands:
 
 ```mpirun -np <num> OpenMP_b_cast.o <size>```
+
 ```mpirun -np <num> MPI_b_cast_flat.o <size>```
+
 ```mpirun -np <num> MPI_b_cast_chain.o <size>```
+
 ```mpirun -np <num> MPI_b_cast_binary.o <size>```
 
 where:
