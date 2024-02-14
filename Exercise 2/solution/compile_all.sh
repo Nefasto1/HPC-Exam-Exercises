@@ -1,5 +1,5 @@
 # Load the compiler
-module load openMPI/4.1.5/icc
+module load openMPI/4.1.5/gnu
 
 # Compile the .c code
 mpicc src/MPI_b_cast.c -o bin/MPI_b_cast.o
