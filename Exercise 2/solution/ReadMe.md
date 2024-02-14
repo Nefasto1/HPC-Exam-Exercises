@@ -1,10 +1,11 @@
 # Exercise 2
 
-To compile the codes we used the icc compiler or use the command:
+To compile the codes we used the gnu or the icc compiler, or use the command:
 
 ```./compile_all.sh```
 
-# Exercise 2a
+# Work in Progress
+## Exercise 2a
 To create the binary files for the .c files execute the commands:
 
 ```mpicc MPI_b_cast.c -o MPI_b_cast.o```
