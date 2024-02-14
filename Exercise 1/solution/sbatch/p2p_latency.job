@@ -17,8 +17,7 @@
 #SBATCH --mail-user=stefano21082001@gmail.com
 
 cd osu-micro-benchmarks-7.3/c/mpi/collective/blocking/
-module load openMPI/4.1.5/icc
-module load openMPI/4.1.5/icx
+module load openMPI/4.1.5/gnu
 
 mpirun -np 2 --map-by core osu_latency > ./results/latency_different_core_thin.txt
 
