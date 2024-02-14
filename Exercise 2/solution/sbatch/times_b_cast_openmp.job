@@ -20,7 +20,8 @@ if [ $# -lt 3 ]
 then
 	echo "Usage: ./OpenMP_Times.sh Maxthreads MaxNumInt Iteration"
 else
-module load openMPI/4.1.5/icc
+module load openMPI/4.1.5/gnu
+
 result=./results/b_cast_openmp.txt
 echo "" | sed "1i\Size\tLatency (ns)\tnp" > $result
 
