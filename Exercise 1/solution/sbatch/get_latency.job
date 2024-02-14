@@ -1,0 +1,72 @@
+#!/bin/bash
+
+#SBATCH --job-name=HPC
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=24
+#SBATCH --ntasks-per-socket=12
+#SBATCH --ntasks-per-core=1
+#SBATCH --exclusive
+#SBATCH --time=0-02:00:00
+#SBATCH --exclude=fat00[1-2]
+
+#SBATCH -p THIN
+
+#SBATCH --output=%x.%j.out 
+#SBATCH --error=%x.%j.err
+
+#SBATCH --mail-user=stefano21082001@gmail.com
+
+cd osu-micro-benchmarks-7.3/c/mpi/collective/blocking/
+module load openMPI/4.1.5/gnu
+
+j=$1
+echo "iteration $j"
+result=./results/results_thin_$j.txt
+echo "" | sed "1i\Size\tLatency (us)\tnp\tAlgorithm" > $result
+
+i=$1
+while [ $i -le 48 ]
+do
+echo "$i/48" 
+# Broadcast
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_bcast_algorithm 1 osu_bcast -x 1000 -m 4:4194304true --mca coll_tuned_bcast_algorithm 1 osu_bcast -x 1000 -m 4:4194304 \
+       | tail -n 20 > ./results/broadcast_flat$i.txt
+
+f=./results/broadcast_flat$i.txt
+sed "s/$/\t$i\tbroadcast_flat/" "$f" >> $result
+
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_bcast_algorithm 2 osu_bcast -x 1000 -m 4:4194304 \
+       | tail -n 20 > ./results/broadcast_chain$i.txt
+
+f=./results/broadcast_chain$i.txt
+sed "s/$/\t$i\tbroadcast_chain/" "$f" >> $result
+
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_bcast_algorithm 5 osu_bcast -x 1000 -m 4:4194304 \
+       | tail -n 20 > ./results/broadcast_binary$i.txt
+
+f=./results/broadcast_binary$i.txt
+sed "s/$/\t$i\tbroadcast_binary_tree/" "$f" >> $result
+
+# Scatter
+
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_scatter_algorithm 1 osu_scatter -x 1000 -m 4:4194304 \
+       | tail -n 20 > ./results/scatter_flat$i.txt
+
+f=./results/scatter_flat$i.txt
+sed "s/$/\t$i\tscatter_flat/" "$f" >> $result
+
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rules true --mca coll_tuned_scatter_algorithm 2 osu_scatter -x 1000 -m 4:4194304 \
+       | tail -n 20 > ./results/scatter_binomial$i.txt
+
+f=~./results/scatter_binomial$i.txt
+sed "s/$/\t$i\tscatter_binomial/" "$f" >> $result
+
+mpirun -np $i --map-by core --bind-to core --mca coll_tuned_use_dynamic_rule true --mca coll_tuned_scatter 3 osu_scatter -x 1000 -m 4:4194304 \
+       | tail -n 20 > ./results/scatter_nb$i.txt
+
+f=./results/scatter_nb$i.txt
+sed "s/$/\t$i\tscatter_nb/" "$f" >> $result
+
+
+i=$(($i + 2))
+done
