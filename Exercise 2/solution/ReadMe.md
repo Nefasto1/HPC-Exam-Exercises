@@ -38,7 +38,7 @@ To run this code use the commands:
 where:
   - `<n_threads>` is the number of threads with which run the code
   - `<num>` is the number of processes with which run the code
-  - `[size]` is the number of double in the array to sort (default 10000000)
+  - `[size]` is the number of double in the array to sort (default 10.000.000)
 
 To get the algorithms times we can run the slurm jobs with the commands:
 
